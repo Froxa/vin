@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Waves</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="mb-3 mt-4 text-center">Waves</h1>
+
+      <div class="d-flex flex-row">
+        <form>
+          <div class="row mb-1">
+            <label for="seed" class="col-sm-6 col-form-label px-1">Seed</label>
+            <div class="col-sm-6">
+              <input type="number" value="123456" class="form-control" id="seed" />
+            </div>
+          </div>
+          
+          <div class="row d-grid mb-3" style="margin-right: 0;">
+            <input type="button" class="btn btn-success" value="Randomize seed" id="randomSeed"/>
+          </div>
+
+          <div class="row mb-3">
+            <label for="resFlow" class="col-sm-6 col-form-label px-1">Flow resolution <small class="text-secondary">(0.001 - 1)</small></label>
+            <div class="col-sm-6">
+              <input type="number" min="0.0" step="0.0001" value="0.005" class="form-control" id="resFlow" />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="resColor" class="col-sm-6 col-form-label px-1">Color resolution <small class="text-secondary">(0.001 - 1)</small></label>
+            <div class="col-sm-6"><input type="number" min="0.0" step="0.001" value="0.01" class="form-control" id="resColor" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="gap" class="col-sm-6 col-form-label px-1">Gap <small class="text-secondary">(1 - 200)</small></label>
+            <div class="col-sm-6"><input type="number" min="1" step="1" value="5" class="form-control" id="gap" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="segment" class="col-sm-6 col-form-label px-1">Segment length <small class="text-secondary">(1 - 30)</small></label>
+            <div class="col-sm-6"><input type="number" min="1" step="1" value="5" class="form-control" id="segment" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="startOffset" class="col-sm-6 col-form-label px-1">Max origin offset <small class="text-secondary">(0 - 200)</small></label>
+            <div class="col-sm-6"><input type="number" min="0" max="200" step="1" value="50" class="form-control" id="startOffset" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="backgroundInput" class="col-sm-6 col-form-label px-1">Background</label>
+            <div class="col-sm-6"><input type="color" class="form-control form-control-color" id="backgroundInput" value="#000000" title="Choose your color"></div>
+          </div>
+          
+          <div class="row mb-3">
+            <label for="colors" class="col-sm-6 col-form-label px-1">Colors <small class="text-secondary">(1 - 50)</small></label>
+            <div class="col-sm-6"><input type="number" min="1" step="1" value="8" class="form-control" id="colors" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="colorOffset" class="col-sm-6 col-form-label px-1">Hue <small class="text-secondary">(0 - 360)</small></label>
+            <div class="col-sm-6"><input type="number" min="0" max="359" step="1" value="1" class="form-control" id="colorOffset" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="strokeBase" class="col-sm-6 col-form-label px-1">Stroke weight <small class="text-secondary">(1 - 30)</small></label>
+            <div class="col-sm-6"><input type="number" min="1" step="1" value="1" class="form-control" id="strokeBase" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="strokeStep" class="col-sm-6 col-form-label px-1">Stroke step <small class="text-secondary">(0.0 - 10)</small></label>
+            <div class="col-sm-6"><input type="number" min="0.0" step="0.1" value="0.1" class="form-control" id="strokeStep" /></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="stepDirection" class="col-sm-6 col-form-label px-1">Step direction</label>
+            <div class="col-sm-6"><select class="form-select" id="stepDirection">
+              <option selected value="0">None</option>
+              <option value="1">Ascending</option>
+              <option value="-1">Descending</option>
+            </select></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="strokeHead" class="col-sm-6 col-form-label px-1">Stroke cap</label>
+            <div class="col-sm-6"><select class="form-select" id="strokeHead">
+              <option selected value="s">Square</option>
+              <option value="p">Project</option>
+              <option value="c">Circle</option>
+            </select></div>
+          </div>
+        </form>
+
+        <div class="d-flex flex-column mx-3">
+          <div id="canvasdiv"></div>
+          <div>
+            <button class="btn btn-success mt-3 w-100" id="saveBtn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="sketch.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
